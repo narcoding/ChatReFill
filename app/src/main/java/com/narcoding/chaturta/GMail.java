@@ -31,6 +31,7 @@ public class GMail {
 	Session mailSession;
 	MimeMessage emailMessage;
 
+
 	public GMail() {
 
 	}
