@@ -13,6 +13,7 @@ import javax.mail.internet.MimeMessage;
 
 public class GMail {
 
+
 	final String emailPort = "587";// gmail's smtp port
 	final String smtpAuth = "true";
 	final String starttls = "true";
