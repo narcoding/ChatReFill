@@ -2,11 +2,12 @@
     <string name="title_activity_login">Join</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_username">What\'s your nickname?</string>
+    <string name="prompt_username">What\'s your username?</string>
     <string name="prompt_edumail">What\'s your education mail?</string>
     <string name="prompt_temporary_password">Enter the temporary password?</string>
     <string name="text">Check your mailbox!</string>
-    <string name="action_sign_in_mail">Sign In</string>
+    <string name="action_sign_in_mail">Sign Up</string>
+    <string name="action_log_in_nick">Are You A Member?</string>
     <string name="action_sign_in">Join</string>
     <string name="action_sign_in_short">Join</string>
 

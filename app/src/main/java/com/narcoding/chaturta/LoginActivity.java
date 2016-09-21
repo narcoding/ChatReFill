@@ -62,12 +62,12 @@ public class LoginActivity extends Activity {
         mSocket.on("login", onLogin);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        mSocket.off("login", onLogin);
-    }
+    //@Override
+    //protected void onDestroy() {
+    //    super.onDestroy();
+//
+    //    mSocket.off("login", onLogin);
+    //}
 
     /**
      * Attempts to sign in the account specified by the login form.
