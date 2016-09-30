@@ -15,18 +15,67 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:id="@+id/btn_sign_up"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/txt_or"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text=" or " />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Log In"
+            android:id="@+id/btn_log_in"
+            android:layout_gravity="center_horizontal" />
+
+
+    </LinearLayout>
+
 
         <EditText
-            android:id="@+id/edumail_input"
+            android:id="@+id/edittext_edumail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prompt_edumail"
             android:inputType="textEmailAddress"
-            android:ems="30"
-            android:maxLength="30"
             android:maxLines="1"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:visibility="gone"/>
 
+        <EditText
+            android:id="@+id/edittext_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="@string/prompt_username"
+            android:ems="20"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/prompt_password"
+            android:ems="20"
+            android:id="@+id/edittext_password"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,23 +87,32 @@
 
 
         <Button
-            android:id="@+id/sign_in_mail"
+            android:id="@+id/btn_sign_up_mail"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/action_sign_in_mail"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:visibility="gone"/>
 
         <Button
-            android:id="@+id/log_in_nick"
+            android:id="@+id/btn_log_in_username"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="@string/action_log_in_nick"
-            android:textStyle="bold"/>
+            android:text="Log In"
+            android:textStyle="bold"
+            android:visibility="gone"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:id="@+id/btn_back"
+            android:layout_gravity="right"
+            android:visibility="gone"/>
 
 
     </LinearLayout>
