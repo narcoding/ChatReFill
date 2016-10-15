@@ -142,6 +142,7 @@ public class SigninActivity extends Activity implements View.OnClickListener {
 
             case R.id.btn_log_in_username:
                 try {
+                    //deneemeali
                     if(Login()){
                         Intent mIntent = new Intent();
                         mIntent.setClass(SigninActivity.this, MainActivity.class);
