@@ -195,10 +195,22 @@ public class SigninActivity extends Activity implements View.OnClickListener {
         valp.add(str_username);valp.add(str_password);
         JSONObject response;
         response = (JSONObject) new SendPostTask(SigninActivity.this).execute("Kullanici/Koddogrula",keyp,valp).get();
-        Log.e("csd",response.get("Content")+"");
+
+        JSONObject obj = new JSONObject(response.get("Content").toString());
+
+        Kullanici k = new Kullanici(
+                obj.getInt("IdKullanici"),
+                obj.getString("Email"),
+                obj.getString("KullaniciAdi"),
+                obj.getString("Sifre"),
+                obj.getString("Kod"),
+                obj.getBoolean("Aktif")
+        );
 
         return false;
     }
+
+
 
     private void sendMailTo(){
 
@@ -211,16 +223,17 @@ public class SigninActivity extends Activity implements View.OnClickListener {
                 .split("\\s*,\\s*"));
 
         str_username= edittext_username.getText().toString();
-        JSONObject response;
+
 
         try {
+            JSONObject responsea;
             List<String> keyp = new ArrayList<String>();
             keyp.add("Email");
             List<String> valp = new ArrayList<String>();
             valp.add(toEmailList.get(0));
-            response = (JSONObject) new SendPostTask(SigninActivity.this).execute("Kullanici/Emailsorgula",keyp,valp).get();
-            Log.e("csd",response.get("Content")+"");
-            if(response.getBoolean("Content"))
+            responsea = (JSONObject) new SendPostTask(SigninActivity.this).execute("Kullanici/Emailsorgula",keyp,valp).get();
+            Log.e("csd",responsea.get("Content")+"");
+            if(responsea.getBoolean("Content"))
             {
                 text.setText("zaten kayıtlısın adamı hasta etme!");
             }

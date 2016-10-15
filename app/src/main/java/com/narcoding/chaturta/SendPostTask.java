@@ -75,6 +75,7 @@ public class SendPostTask extends AsyncTask {
             jsonObject.put("Message", urlConnection.getResponseMessage());
             jsonObject.put("Length", urlConnection.getContentLength());
             jsonObject.put("Type", urlConnection.getContentType());
+
             return jsonObject;
         } catch (IOException | JSONException e) {
             return e.toString();
