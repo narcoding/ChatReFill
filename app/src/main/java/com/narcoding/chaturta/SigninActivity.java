@@ -100,7 +100,6 @@ public class SigninActivity extends Activity implements View.OnClickListener {
 
     }
 
-
     @Override
     public void onClick(View v) {
 
