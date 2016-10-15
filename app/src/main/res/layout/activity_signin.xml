@@ -77,6 +77,36 @@
             android:layout_gravity="center_horizontal"
             android:visibility="gone"/>
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/new_password"
+            android:ems="20"
+            android:id="@+id/edittext_new_password"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/repeat_new_password"
+            android:ems="20"
+            android:id="@+id/edittext_repeat_new_password"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btn_new_password_"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/action_newpassword_confirm"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
