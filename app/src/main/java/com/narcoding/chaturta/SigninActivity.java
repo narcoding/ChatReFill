@@ -27,6 +27,8 @@ public class SigninActivity extends Activity implements View.OnClickListener {
     private EditText edittext_edumail;
     private EditText edittext_username;
     private EditText edittext_password;
+    private EditText edittext_new_password;
+    private EditText edittext_repeat_new_password;
 
     private String str_edumail;
     private String str_password;
@@ -36,6 +38,7 @@ public class SigninActivity extends Activity implements View.OnClickListener {
     private Button btn_log_in;
     private Button btn_sign_up_mail;
     private Button btn_log_in_username;
+    private Button btn_new_password_confirm;
     private Button btn_back;
 
     private TextView text;
@@ -49,12 +52,14 @@ public class SigninActivity extends Activity implements View.OnClickListener {
         btn_log_in= (Button) findViewById(R.id.btn_log_in);
         btn_sign_up_mail= (Button) findViewById(R.id.btn_sign_up_mail);
         btn_log_in_username= (Button) findViewById(R.id.btn_log_in_username);
+        btn_new_password_confirm= (Button) findViewById(R.id.btn_new_password_confirm);
         btn_back= (Button) findViewById(R.id.btn_back);
 
         btn_sign_up.setOnClickListener((View.OnClickListener)this);
         btn_log_in.setOnClickListener((View.OnClickListener)this);
         btn_sign_up_mail.setOnClickListener((View.OnClickListener)this);
         btn_log_in_username.setOnClickListener((View.OnClickListener)this);
+        btn_new_password_confirm.setOnClickListener((View.OnClickListener)this);
         btn_back.setOnClickListener((View.OnClickListener)this);
 
         text= (TextView) findViewById(R.id.textView);
@@ -63,6 +68,8 @@ public class SigninActivity extends Activity implements View.OnClickListener {
         edittext_edumail= (EditText) findViewById(R.id.edittext_edumail);
         edittext_username= (EditText) findViewById(R.id.edittext_username);
         edittext_password= (EditText) findViewById(R.id.edittext_password);
+        edittext_new_password= (EditText) findViewById(R.id.edittext_new_password);
+        edittext_repeat_new_password= (EditText) findViewById(R.id.edittext_repeat_new_password);
 
     }
 

@@ -98,7 +98,7 @@
             android:visibility="gone"/>
 
         <Button
-            android:id="@+id/btn_new_password_"
+            android:id="@+id/btn_new_password_confirm"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
