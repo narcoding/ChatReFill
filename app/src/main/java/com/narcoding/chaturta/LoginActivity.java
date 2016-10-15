@@ -4,13 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,16 +37,16 @@ public class LoginActivity extends Activity {
 
         // Set up the login form.
         mUsernameView = (EditText) findViewById(R.id.username_input);
-        mUsernameView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
+        //mUsernameView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        //    @Override
+        //    public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+        //        if (id == R.id.login || id == EditorInfo.IME_NULL) {
+        //            attemptLogin();
+        //            return true;
+        //        }
+        //        return false;
+        //    }
+        //});
 
         Button logInButton = (Button) findViewById(R.id.log_in_button);
         logInButton.setOnClickListener(new OnClickListener() {
