@@ -35,6 +35,8 @@ public class SigninActivity extends Activity implements View.OnClickListener {
     private String str_password;
     private String str_username;
 
+    private int KullaniciId;
+
     private Button btn_sign_up;
     private Button btn_log_in;
     private Button btn_sign_up_mail;
@@ -146,11 +148,9 @@ public class SigninActivity extends Activity implements View.OnClickListener {
 
                     Kullanici k = Login();
 
+
                     if(k.Aktif){
-                        Intent mIntent = new Intent();
-                        mIntent.setClass(SigninActivity.this, MainActivity.class);
-                        startActivity(mIntent);
-                        finish();
+                        Chat();
                     }
                     else if (k.IdKullanici!=0 && k.Aktif==false ){
 
@@ -160,6 +160,8 @@ public class SigninActivity extends Activity implements View.OnClickListener {
                         edittext_username.setVisibility(View.GONE);
                         edittext_password.setVisibility(View.GONE);
                         btn_log_in_username.setVisibility(View.GONE);
+
+                        KullaniciId=k.IdKullanici;
 
                         Toast.makeText(this, "beni aktif yap oç", Toast.LENGTH_LONG).show();
                     }
@@ -178,15 +180,17 @@ public class SigninActivity extends Activity implements View.OnClickListener {
             case R.id.btn_new_password_confirm:
 
                 if(edittext_new_password.getText().toString().equals(edittext_repeat_new_password.getText().toString())){
-                    Intent pIntent = new Intent();
-                    pIntent.setClass(SigninActivity.this, MainActivity.class);
-                    startActivity(pIntent);
-                    finish();
+
+                    List<String> key = new ArrayList<String>();
+                    key.add("Kid");key.add("Sifre");
+                    List<String> val = new ArrayList<String>();
+                    val.add(KullaniciId+"");val.add(edittext_new_password.getText().toString());
+                    new SendPostTask(SigninActivity.this).execute("Kullanici/Sifrekaydet",key,val);
+
+                    Chat();
                 }
                 else {
-
                     Toast.makeText(this, "Girdiğiniz şifreler aynı değil!", Toast.LENGTH_LONG).show();
-
                 }
 
                 break;
@@ -243,7 +247,12 @@ public class SigninActivity extends Activity implements View.OnClickListener {
         return k;
     }
 
-
+    private void Chat(){
+        Intent mIntent = new Intent();
+        mIntent.setClass(SigninActivity.this, MainActivity.class);
+        startActivity(mIntent);
+        finish();
+    }
 
     private void sendMailTo(){
 
