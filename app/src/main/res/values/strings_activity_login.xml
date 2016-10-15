@@ -4,9 +4,12 @@
     <!-- Strings related to login -->
     <string name="prompt_username">What\'s your username?</string>
     <string name="prompt_edumail">What\'s your education mail?</string>
-    <string name="prompt_password">Enter the password?</string>
+    <string name="prompt_password">Enter the password</string>
+    <string name="new_password">Enter the new password</string>
+    <string name="repeat_new_password">Repeat the new password</string>
     <string name="text">Check your mailbox!</string>
     <string name="action_sign_in_mail">Sign Up</string>
+    <string name="action_newpassword_confirm">Confirm</string>
     <string name="action_log_in_nick">Are You A Member?</string>
     <string name="action_sign_in">Join</string>
     <string name="action_sign_in_short">Join</string>
