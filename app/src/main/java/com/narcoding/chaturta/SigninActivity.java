@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -142,12 +143,25 @@ public class SigninActivity extends Activity implements View.OnClickListener {
 
             case R.id.btn_log_in_username:
                 try {
-                    //deneemenaim
-                    if(Login()){
+
+                    Kullanici k = Login();
+
+                    if(k.Aktif){
                         Intent mIntent = new Intent();
                         mIntent.setClass(SigninActivity.this, MainActivity.class);
                         startActivity(mIntent);
                         finish();
+                    }
+                    else if (k.IdKullanici!=0 && k.Aktif==false ){
+                        //ilk giriş
+                        // textleri kaldır
+                        // şifre ve onayşifreyi göster
+                        // onayla butonu göster
+                        // onaylaya basılmasının onclicki
+                        Toast.makeText(this, "beni aktif yap oç", Toast.LENGTH_LONG).show();
+                    }
+                    else if (k.Aktif==false && k.IdKullanici==0){
+                        Toast.makeText(this,"Kullanıcı Adı ve Şifre Hatalı Lütfen Bilgilerinizi Kontrol Ediniz",Toast.LENGTH_LONG).show();
                     }
                 } catch (ExecutionException e) {
                     e.printStackTrace();
@@ -184,7 +198,7 @@ public class SigninActivity extends Activity implements View.OnClickListener {
         };
     }
 
-    private boolean Login() throws ExecutionException, InterruptedException, JSONException {
+    private Kullanici Login() throws ExecutionException, InterruptedException, JSONException {
 
         str_password = edittext_password.getText().toString();
         str_username = edittext_username.getText().toString();
@@ -194,7 +208,7 @@ public class SigninActivity extends Activity implements View.OnClickListener {
         List<String> valp = new ArrayList<String>();
         valp.add(str_username);valp.add(str_password);
         JSONObject response;
-        response = (JSONObject) new SendPostTask(SigninActivity.this).execute("Kullanici/Koddogrula",keyp,valp).get();
+        response = (JSONObject) new SendPostTask(SigninActivity.this).execute("Kullanici/Login",keyp,valp).get();
 
         JSONObject obj = new JSONObject(response.get("Content").toString());
 
@@ -207,7 +221,7 @@ public class SigninActivity extends Activity implements View.OnClickListener {
                 obj.getBoolean("Aktif")
         );
 
-        return false;
+        return k;
     }
 
 
