@@ -153,11 +153,14 @@ public class SigninActivity extends Activity implements View.OnClickListener {
                         finish();
                     }
                     else if (k.IdKullanici!=0 && k.Aktif==false ){
-                        //ilk giriş
-                        // textleri kaldır
-                        // şifre ve onayşifreyi göster
-                        // onayla butonu göster
-                        // onaylaya basılmasının onclicki
+
+                        edittext_new_password.setVisibility(View.VISIBLE);
+                        edittext_repeat_new_password.setVisibility(View.VISIBLE);
+                        btn_new_password_confirm.setVisibility(View.VISIBLE);
+                        edittext_username.setVisibility(View.GONE);
+                        edittext_password.setVisibility(View.GONE);
+                        btn_log_in_username.setVisibility(View.GONE);
+
                         Toast.makeText(this, "beni aktif yap oç", Toast.LENGTH_LONG).show();
                     }
                     else if (k.Aktif==false && k.IdKullanici==0){
@@ -170,6 +173,22 @@ public class SigninActivity extends Activity implements View.OnClickListener {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                break;
+
+            case R.id.btn_new_password_confirm:
+
+                if(edittext_new_password.getText().toString().equals(edittext_repeat_new_password.getText().toString())){
+                    Intent pIntent = new Intent();
+                    pIntent.setClass(SigninActivity.this, MainActivity.class);
+                    startActivity(pIntent);
+                    finish();
+                }
+                else {
+
+                    Toast.makeText(this, "Girdiğiniz şifreler aynı değil!", Toast.LENGTH_LONG).show();
+
+                }
+
                 break;
         }
     }
