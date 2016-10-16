@@ -279,7 +279,7 @@ public class SigninActivity extends Activity implements View.OnClickListener {
         }
 
         // perform the user login attempt.
-        mSocket.emit("add user", str_username);
+        mSocket.emit("login", str_username);
 
 
         Intent mIntent = new Intent();
@@ -354,11 +354,11 @@ public class SigninActivity extends Activity implements View.OnClickListener {
                 return;
             }
 
-            Intent intent = new Intent();
-            intent.putExtra("username", str_username);
-            intent.putExtra("numUsers", numUsers);
-            setResult(RESULT_OK, intent);
-            finish();
+           //Intent intent = new Intent();
+           //intent.putExtra("username", str_username);
+           //intent.putExtra("numUsers", numUsers);
+           //setResult(RESULT_OK, intent);
+           //finish();
         }
     };
 }

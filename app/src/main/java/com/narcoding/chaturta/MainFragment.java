@@ -2,8 +2,10 @@ package com.narcoding.chaturta;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +25,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,7 +55,8 @@ public class MainFragment extends Fragment {
     private Handler mTypingHandler = new Handler();
     private String mUsername;
     private Socket mSocket;
-
+    private boolean connected=false;
+    private String room = "";
 
 
     private Boolean isConnected = true;
@@ -72,20 +77,25 @@ public class MainFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        Log.e("csd","mainfragmentoncreated");
-
         ChatApplication app = (ChatApplication) getActivity().getApplication();
         mSocket = app.getSocket();
-        mSocket.on(Socket.EVENT_CONNECT,onConnect);
+        mSocket.on(Socket.EVENT_CONNECT, onConnect);
         mSocket.on(Socket.EVENT_DISCONNECT,onDisconnect);
         mSocket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
         mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-        mSocket.on("new message", onNewMessage);
+        mSocket.on("message", onNewMessage);
+        mSocket.on("chat start", onChatStart);
         mSocket.on("user joined", onUserJoined);
         mSocket.on("user left", onUserLeft);
         mSocket.on("typing", onTyping);
         mSocket.on("stop typing", onStopTyping);
         mSocket.connect();
+
+        ///sharedpre. kullanıcı bilgisi
+        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        Gson gson = new Gson();
+        mUsername = gson.fromJson(mPrefs.getString("kullanici", ""), Kullanici.class).KullaniciAdi.toString();
+        Log.e("csd", "spkullanıcıadı:" + mUsername);
 
         //startSignIn();
     }
@@ -106,7 +116,7 @@ public class MainFragment extends Fragment {
         mSocket.off(Socket.EVENT_DISCONNECT, onDisconnect);
         mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
         mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-        mSocket.off("new message", onNewMessage);
+        mSocket.off("message", onNewMessage);
         mSocket.off("user joined", onUserJoined);
         mSocket.off("user left", onUserLeft);
         mSocket.off("typing", onTyping);
@@ -126,9 +136,15 @@ public class MainFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView v, int id, KeyEvent event) {
                 if (id == R.id.send || id == EditorInfo.IME_NULL) {
-                    attemptSend();
+                    Log.e("csd", "onEditorAction ELSE");
+                    try {
+                        attemptSend();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     return true;
                 }
+
                 return false;
             }
         });
@@ -160,7 +176,11 @@ public class MainFragment extends Fragment {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                attemptSend();
+                try {
+                    attemptSend();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -174,7 +194,7 @@ public class MainFragment extends Fragment {
         }
 
         mUsername = data.getStringExtra("username");
-        Log.e("csd", "kullanıcıadı:" + mUsername);
+
         int numUsers = data.getIntExtra("numUsers", 1);
 
         addLog(getResources().getString(R.string.message_welcome));
@@ -254,7 +274,7 @@ public class MainFragment extends Fragment {
         }
     }
 
-    private void attemptSend() {
+    private void attemptSend() throws JSONException {
         if (null == mUsername) return;
         if (!mSocket.connected()) return;
 
@@ -270,7 +290,12 @@ public class MainFragment extends Fragment {
         addMessage(mUsername, message);
 
         // perform the sending message attempt.
-        mSocket.emit("message", "{username:"+ mUsername+",message:" +message+"}");
+        //mSocket.emit("message", "{'username':'"+ mUsername+"','message':'" +message+"'}");
+        JSONObject j = new JSONObject();
+        j.put("username",mUsername);
+        j.put("message",message);
+        mSocket.emit("message", j);
+        Log.e("csd",  "{'username':"+ mUsername+",'message':" +message+"}");
     }
 
     private void startSignIn() {
@@ -341,6 +366,7 @@ public class MainFragment extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+
                     JSONObject data = (JSONObject) args[0];
                     String username;
                     String message;
@@ -350,13 +376,39 @@ public class MainFragment extends Fragment {
                     } catch (JSONException e) {
                         return;
                     }
-
-                    removeTyping(username);
+                    Log.e("csd",username+"-"+message);
+                    //removeTyping(username);
                     addMessage(username, message);
                 }
             });
         }
     };
+
+
+    ///
+    private Emitter.Listener onChatStart = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
+                    String roomx;
+                    try {
+                        roomx = data.getString("room");
+                    } catch (JSONException e) {
+                        return;
+                    }
+                    connected=true;
+                    room=roomx;
+                    //addLog(getResources().getString(R.string.message_user_joined, room));
+                    //addParticipantsLog(numUsers);
+                }
+            });
+        }
+    };
+    ///
+
 
     private Emitter.Listener onUserJoined = new Emitter.Listener() {
         @Override
