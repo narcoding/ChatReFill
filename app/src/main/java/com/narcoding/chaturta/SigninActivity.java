@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -162,7 +163,7 @@ public class SigninActivity extends Activity implements View.OnClickListener {
 
                     if(k.Aktif){
 
-                        SharedPreferences mPrefs = getPreferences(MODE_PRIVATE);
+                        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor prefsEditor=mPrefs.edit();
                         Gson gson=new Gson();
                         String json = gson.toJson(k);

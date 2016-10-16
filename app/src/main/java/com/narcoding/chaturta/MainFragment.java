@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -71,6 +72,7 @@ public class MainFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
+        Log.e("csd","mainfragmentoncreated");
 
         ChatApplication app = (ChatApplication) getActivity().getApplication();
         mSocket = app.getSocket();
@@ -142,7 +144,7 @@ public class MainFragment extends Fragment {
 
                 if (!mTyping) {
                     mTyping = true;
-                    mSocket.emit("typing");
+                    //mSocket.emit("typing");
                 }
 
                 mTypingHandler.removeCallbacks(onTypingTimeout);
@@ -172,6 +174,7 @@ public class MainFragment extends Fragment {
         }
 
         mUsername = data.getStringExtra("username");
+        Log.e("csd", "kullanıcıadı:" + mUsername);
         int numUsers = data.getIntExtra("numUsers", 1);
 
         addLog(getResources().getString(R.string.message_welcome));
@@ -256,7 +259,7 @@ public class MainFragment extends Fragment {
         if (!mSocket.connected()) return;
 
         mTyping = false;
-
+        Log.e("csd","mesaj teşebbüsü");
         String message = mInputMessageView.getText().toString().trim();
         if (TextUtils.isEmpty(message)) {
             mInputMessageView.requestFocus();
@@ -267,7 +270,7 @@ public class MainFragment extends Fragment {
         addMessage(mUsername, message);
 
         // perform the sending message attempt.
-        mSocket.emit("new message", message);
+        mSocket.emit("message", "{username:"+ mUsername+",message:" +message+"}");
     }
 
     private void startSignIn() {
@@ -295,7 +298,7 @@ public class MainFragment extends Fragment {
                 public void run() {
                     if(!isConnected) {
                         if(null!=mUsername)
-                            mSocket.emit("add user", mUsername);
+                            //mSocket.emit("add user", mUsername);
                         Toast.makeText(getActivity().getApplicationContext(),
                                 R.string.connect, Toast.LENGTH_LONG).show();
                         isConnected = true;
@@ -446,7 +449,7 @@ public class MainFragment extends Fragment {
             if (!mTyping) return;
 
             mTyping = false;
-            mSocket.emit("stop typing");
+            //mSocket.emit("stop typing");
         }
     };
 }
