@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Username"
-        android:id="@+id/profile_username"
+        android:id="@+id/txt_profile_username"
         android:layout_below="@+id/imageButton"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

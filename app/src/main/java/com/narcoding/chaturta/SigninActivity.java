@@ -2,6 +2,7 @@ package com.narcoding.chaturta;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -158,8 +161,14 @@ public class SigninActivity extends Activity implements View.OnClickListener {
 
 
                     if(k.Aktif){
-                        //SharedPreferences sp;
-                        //sp.edit(k);
+
+                        SharedPreferences mPrefs = getPreferences(MODE_PRIVATE);
+                        SharedPreferences.Editor prefsEditor=mPrefs.edit();
+                        Gson gson=new Gson();
+                        String json = gson.toJson(k);
+                        prefsEditor.putString("kullanici", json);
+                        prefsEditor.commit();
+
                         Chat();
                     }
                     else if (k.IdKullanici!=0 && k.Aktif==false ){
