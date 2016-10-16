@@ -22,13 +22,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 
 /**
@@ -80,7 +82,7 @@ public class MainFragment extends Fragment {
         mSocket.on("stop typing", onStopTyping);
         mSocket.connect();
 
-        startSignIn();
+        //startSignIn();
     }
 
     @Override

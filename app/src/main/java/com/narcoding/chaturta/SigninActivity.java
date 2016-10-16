@@ -3,6 +3,7 @@ package com.narcoding.chaturta;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 public class SigninActivity extends Activity implements View.OnClickListener {
 
@@ -48,6 +50,7 @@ public class SigninActivity extends Activity implements View.OnClickListener {
     private TextView txt_or;
 
     private Socket mSocket;
+    int numUsers;
 
     private void init(){
 
@@ -100,6 +103,11 @@ public class SigninActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_signin);
 
         init();
+
+        ChatApplication app = (ChatApplication) getApplication();
+        mSocket = app.getSocket();
+
+        mSocket.on("login", onLogin);
 
     }
 
@@ -185,7 +193,7 @@ public class SigninActivity extends Activity implements View.OnClickListener {
                     key.add("Kid");key.add("Sifre");
                     List<String> val = new ArrayList<String>();
                     val.add(KullaniciId+"");val.add(edittext_new_password.getText().toString());
-                    new SendPostTask(SigninActivity.this).execute("Kullanici/Sifrekaydet",key,val);
+                    new SendPostTask(SigninActivity.this).execute("Kullanici/Sifrekaydet", key, val);
 
                     Chat();
                 }
@@ -248,8 +256,25 @@ public class SigninActivity extends Activity implements View.OnClickListener {
     }
 
     private void Chat(){
+
+        // Check for a valid username.
+        if (TextUtils.isEmpty(str_username)) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            edittext_username.setError(getString(R.string.error_field_required));
+            edittext_username.requestFocus();
+            return;
+        }
+
+        // perform the user login attempt.
+        mSocket.emit("add user", str_username);
+
+
         Intent mIntent = new Intent();
+        mIntent.putExtra("username",str_username);
+        mIntent.putExtra("numUsers",numUsers);
         mIntent.setClass(SigninActivity.this, MainActivity.class);
+        setResult(RESULT_OK, mIntent);
         startActivity(mIntent);
         finish();
     }
@@ -303,5 +328,26 @@ public class SigninActivity extends Activity implements View.OnClickListener {
         }
 
     }
+
+    private Emitter.Listener onLogin = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            JSONObject data = (JSONObject) args[0];
+
+            //int numUsers;
+
+            try {
+                numUsers = data.getInt("numUsers");
+            } catch (JSONException e) {
+                return;
+            }
+
+            Intent intent = new Intent();
+            intent.putExtra("username", str_username);
+            intent.putExtra("numUsers", numUsers);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+    };
 }
 
