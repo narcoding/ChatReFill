@@ -158,6 +158,8 @@ public class SigninActivity extends Activity implements View.OnClickListener {
 
 
                     if(k.Aktif){
+                        //SharedPreferences sp;
+                        //sp.edit(k);
                         Chat();
                     }
                     else if (k.IdKullanici!=0 && k.Aktif==false ){

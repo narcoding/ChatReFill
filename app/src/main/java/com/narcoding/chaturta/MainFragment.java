@@ -51,6 +51,8 @@ public class MainFragment extends Fragment {
     private String mUsername;
     private Socket mSocket;
 
+
+
     private Boolean isConnected = true;
 
     public MainFragment() {
@@ -68,6 +70,7 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         setHasOptionsMenu(true);
+
 
         ChatApplication app = (ChatApplication) getActivity().getApplication();
         mSocket = app.getSocket();
@@ -188,11 +191,27 @@ public class MainFragment extends Fragment {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_leave) {
-            leave();
-            return true;
+        switch (id){
+            case R.id.action_profil:
+                Intent i=new Intent(getActivity(),Profil.class);
+                startActivity(i);
+                break;
+
+            case R.id.action_settings:
+                Intent in=new Intent(getActivity(),Settings.class);
+                startActivity(in);
+                break;
+
+            case R.id.action_leave:
+                leave();
+                break;
         }
+
+        ////noinspection SimplifiableIfStatement
+        //if (id == R.id.action_leave) {
+        //    leave();
+        //    return true;
+        //}
 
         return super.onOptionsItemSelected(item);
     }
