@@ -65,12 +65,12 @@ public class SigninActivity extends Activity implements View.OnClickListener {
         btn_new_password_confirm= (Button) findViewById(R.id.btn_new_password_confirm);
         btn_back= (Button) findViewById(R.id.btn_back);
 
-        btn_sign_up.setOnClickListener((View.OnClickListener)this);
-        btn_log_in.setOnClickListener((View.OnClickListener)this);
-        btn_sign_up_mail.setOnClickListener((View.OnClickListener)this);
-        btn_log_in_username.setOnClickListener((View.OnClickListener)this);
-        btn_new_password_confirm.setOnClickListener((View.OnClickListener)this);
-        btn_back.setOnClickListener((View.OnClickListener)this);
+        btn_sign_up.setOnClickListener(this);
+        btn_log_in.setOnClickListener(this);
+        btn_sign_up_mail.setOnClickListener(this);
+        btn_log_in_username.setOnClickListener(this);
+        btn_new_password_confirm.setOnClickListener(this);
+        btn_back.setOnClickListener(this);
 
         text= (TextView) findViewById(R.id.textView);
         txt_or= (TextView) findViewById(R.id.txt_or);
