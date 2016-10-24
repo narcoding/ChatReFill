@@ -75,7 +75,6 @@ public class Profil extends ActionBarActivity implements View.OnClickListener {
         init();
 
 
-
     }
 
 
@@ -84,13 +83,17 @@ public class Profil extends ActionBarActivity implements View.OnClickListener {
         switch (v.getId()){
 
             case R.id.imgbtn_profile_image:
+
                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                 photoPickerIntent.setType("image/*");
                 startActivityForResult(photoPickerIntent, SELECT_PHOTO);
 
+
                 Toast.makeText(getApplicationContext(), "Profil Resmi Yükleyin", Toast.LENGTH_SHORT).show();
 
                 btn_profile_settings_confirm.setVisibility(View.VISIBLE);
+                btn_profile_settings_edit.setVisibility(View.GONE);
+
                 break;
 
             case R.id.btn_profile_settings_edit:
@@ -104,6 +107,8 @@ public class Profil extends ActionBarActivity implements View.OnClickListener {
                 break;
 
             case R.id.btn_profile_settings_confirm:
+
+
                 edittxt_username.setVisibility(View.GONE);
                 edittxt_bio.setVisibility(View.GONE);
                 txt_profile_username.setVisibility(View.VISIBLE);
@@ -141,7 +146,7 @@ public class Profil extends ActionBarActivity implements View.OnClickListener {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
-            imgbtn_profile_image.setBackground(null);
+            //imgbtn_profile_image.setBackground(null);
             imgbtn_profile_image.setImageBitmap(bitmap);
 
             // Do something with the bitmap
